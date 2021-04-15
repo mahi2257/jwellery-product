@@ -17,7 +17,7 @@ public interface IProductService {
 	//public Product postProduct(Product products);	
 	//public void deleteByProdId(Long prodId);
 	
-	public Page<Product> findProductsByGenericSearch(GenericSearchFilter search, Pageable pageable);
+	public List<Map<String, Object>> findProductsByGenericSearch(GenericSearchFilter search, Pageable pageable);
 	
 	public List<Product> findProductByFilter(Product product);
 	

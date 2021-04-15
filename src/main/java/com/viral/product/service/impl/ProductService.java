@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import com.viral.product.model.GenericSearchFilter;
 import com.viral.product.model.Product;
 import com.viral.product.model.SubCategory;
 import com.viral.product.service.IProductService;
-import com.viral.product.specification.ProductSpecification;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +37,7 @@ public class ProductService implements IProductService{
 	JdbcTemplate jdbcTemplate;
 
 	@Override
-	public Page<Product> findProductsByGenericSearch(GenericSearchFilter search, Pageable pageable) {
+	public List<Map<String, Object>> findProductsByGenericSearch(GenericSearchFilter search, Pageable pageable) {
 
 		StringBuilder queryBuilder = new StringBuilder("select * from product p, category c where p.CAT_ID_FK=c.CAT_ID");
 		Float minPrice = null;
@@ -72,10 +70,10 @@ public class ProductService implements IProductService{
 		log.debug("Inside @method findProductsByGenericSearch : Query : "+queryBuilder);
 		List<Map<String, Object>> queryForList = jdbcTemplate.queryForList(queryBuilder.toString());
 		log.debug("queryForList :: "+Arrays.asList(queryForList));
-		Page<Product> pageObj = productRepo.findAll(new ProductSpecification(null, null, null, minPrice, maxPrice, service, type, regional, purpose, category.getCatName(), subCategory.getSubCatName()), pageable);
-		System.out.println("Page Obj : "+pageObj);
-		//		return queryForList;
-		return pageObj;
+//		Page<Product> pageObj = productRepo.findAll(new ProductSpecification(null, null, null, minPrice, maxPrice, service, type, regional, purpose, category.getCatName(), subCategory.getSubCatName()), pageable);
+//		System.out.println("Page Obj : "+pageObj);
+		return queryForList;
+//		return pageObj;
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class ProductController {
 	//this api used for generic search
 	//we can use this api when we are finding all products based on category
 	@GetMapping("/findProductsByFilter")
-	public Page<Product> findProductsBySearch(@RequestBody GenericSearchFilter search,  Integer pageNumber, Integer pageSize){
+	public List<Map<String, Object>> findProductsBySearch(@RequestBody GenericSearchFilter search,  Integer pageNumber, Integer pageSize){
 		log.info("Inside @method findProductsBySearch");
 		PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
 		return productService.findProductsByGenericSearch(search, pageRequest);
